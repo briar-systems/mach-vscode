@@ -15,11 +15,13 @@ For the complete language specification, see the `doc/language/` directory in th
 ## Features
 - Syntax highlighting kept in sync with the current compiler keywords, intrinsics, and operators
 - Support for current Mach syntax including:
-  - Records (`rec`) and unions (`uni`)
+  - Records (`rec`), unions (`uni`) and tags (`tag Name: u8 { case; case: Payload; }`)
+  - Tag construction `Type.case{payload}` and the `sel place.case` test
   - Generic types and functions with `[T]` bracket syntax
   - Method definitions using `Type.method` syntax
-  - Comptime directives and `$if`/`$or` chains, `$`-intrinsics (`$size_of`, `$assert`, ...), and `$mach.*` reads
-  - Value (`::`) and bit-reinterpret (`:~`) casts, address-of (`?`) / dereference (`@`) operators
+  - Comptime directives `$if`/`$or`/`$each`/`$error`, `$`-intrinsics (`$size_of`, `$cases`, `$is_tag`, `$discriminant_of`, ...), and `$mach.*` reads
+  - Value (`::`), bit-reinterpret (`:~`) and public-result (`:>`) casts, address-of (`?`) / dereference (`@`) operators
+  - Decorators `#[inline]`, `#[deprecated("msg")]`, `#[oblivious]`, `#[packed]`, ...
   - Inline assembly blocks (`asm <isa> { ... }`)
   - Variadic functions (`...`)
 - Line comments with `#` including toggle/comment actions
