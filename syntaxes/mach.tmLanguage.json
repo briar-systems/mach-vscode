@@ -17,6 +17,12 @@
             "include": "#numbers"
         },
         {
+            "include": "#use-statements"
+        },
+        {
+            "include": "#declarations"
+        },
+        {
             "include": "#keywords"
         },
         {
@@ -27,12 +33,6 @@
         },
         {
             "include": "#asm"
-        },
-        {
-            "include": "#use-statements"
-        },
-        {
-            "include": "#declarations"
         },
         {
             "include": "#calls"
@@ -60,15 +60,19 @@
                     "begin": "#\\[",
                     "end": "\\]",
                     "beginCaptures": {
-                        "0": { "name": "punctuation.definition.decorator.begin.mach" }
+                        "0": {
+                            "name": "punctuation.definition.decorator.begin.mach"
+                        }
                     },
                     "endCaptures": {
-                        "0": { "name": "punctuation.definition.decorator.end.mach" }
+                        "0": {
+                            "name": "punctuation.definition.decorator.end.mach"
+                        }
                     },
                     "patterns": [
                         {
                             "name": "keyword.other.decorator.mach",
-                            "match": "\\b(?:symbol|library|inline|align|section)\\b"
+                            "match": "\\b(?:symbol|library|inline|noinline|oblivious|align|section|packed|naked|embed|deprecated)\\b"
                         },
                         {
                             "include": "#strings"
@@ -152,19 +156,23 @@
             "patterns": [
                 {
                     "name": "storage.modifier.mach",
-                    "match": "\\b(?:pub|ext)\\b"
+                    "match": "(?<!\\.)\\b(?:pub|ext)\\b"
                 },
                 {
                     "name": "keyword.declaration.mach",
-                    "match": "\\b(?:def|val|var|fun|rec|uni|use|fwd|test)\\b"
+                    "match": "(?<!\\.)\\b(?:def|val|var|fun|rec|uni|tag|use|fwd|test)\\b"
                 },
                 {
                     "name": "keyword.control.mach",
-                    "match": "\\b(?:if|or|for|brk|cnt|ret|fin|asm)\\b"
+                    "match": "(?<!\\.)\\b(?:if|or|for|in|brk|cnt|ret|fin|asm)\\b"
+                },
+                {
+                    "name": "keyword.operator.sel.mach",
+                    "match": "(?<!\\.)\\bsel\\b"
                 },
                 {
                     "name": "constant.language.mach",
-                    "match": "\\bnil\\b"
+                    "match": "(?<!\\.)\\bnil\\b"
                 }
             ]
         },
@@ -185,7 +193,7 @@
         "cast": {
             "patterns": [
                 {
-                    "match": "(::|:~)\\s*((?:\\*)*)\\s*(?:(u8|u16|u32|u64|i8|i16|i32|i64|f32|f64|ptr)\\b|([A-Za-z_][A-Za-z0-9_]*))",
+                    "match": "(::|:~|:>)\\s*((?:\\*)*)\\s*(?:(u8|u16|u32|u64|i8|i16|i32|i64|f32|f64|ptr)\\b|([A-Za-z_][A-Za-z0-9_]*))",
                     "captures": {
                         "1": {
                             "name": "keyword.operator.cast.mach"
@@ -230,7 +238,7 @@
                 },
                 {
                     "name": "keyword.declaration.mach",
-                    "match": "\\b(?:fun|rec|uni)\\b"
+                    "match": "\\b(?:fun|rec|uni|tag)\\b"
                 },
                 {
                     "name": "meta.type.generic.mach",
@@ -269,7 +277,7 @@
             "patterns": [
                 {
                     "name": "keyword.control.compiletime.mach",
-                    "match": "\\$(?:if|or|each)\\b"
+                    "match": "\\$(?:if|or|each|error)\\b"
                 },
                 {
                     "name": "support.function.compiletime.mach",
@@ -369,13 +377,34 @@
             "patterns": [
                 {
                     "name": "meta.definition.method.mach",
-                    "match": "\\b(?:(?:pub|ext)\\s+)*fun\\s+\\(\\s*([A-Za-z_][A-Za-z0-9_]*)\\s*:\\s*[*]*([A-Za-z_][A-Za-z0-9_\\[\\]]*)\\s*\\)\\s+([A-Za-z_][A-Za-z0-9_]*)\\s*(?:\\[(?:[^\\[\\]]|\\[[^\\[\\]]*\\])*\\])?\\s*\\(",
+                    "match": "\\b((?:(?:pub|ext)\\s+)*)(fun)\\s+\\(\\s*([A-Za-z_][A-Za-z0-9_]*)\\s*:\\s*[*]*([A-Za-z_][A-Za-z0-9_\\[\\]]*)\\s*\\)\\s+([A-Za-z_][A-Za-z0-9_]*)\\s*(?:\\[(?:[^\\[\\]]|\\[[^\\[\\]]*\\])*\\])?\\s*(?=\\()",
                     "captures": {
                         "1": {
-                            "name": "variable.parameter.mach"
+                            "name": "storage.modifier.mach"
                         },
                         "2": {
+                            "name": "keyword.declaration.mach"
+                        },
+                        "3": {
+                            "name": "variable.parameter.mach"
+                        },
+                        "4": {
                             "name": "entity.name.type.mach"
+                        },
+                        "5": {
+                            "name": "entity.name.function.mach"
+                        }
+                    }
+                },
+                {
+                    "name": "meta.definition.function.mach",
+                    "match": "\\b((?:(?:pub|ext)\\s+)*)(fun)\\s+([A-Za-z_][A-Za-z0-9_]*)\\s*(?:\\[(?:[^\\[\\]]|\\[[^\\[\\]]*\\])*\\])?\\s*(?=\\()",
+                    "captures": {
+                        "1": {
+                            "name": "storage.modifier.mach"
+                        },
+                        "2": {
+                            "name": "keyword.declaration.mach"
                         },
                         "3": {
                             "name": "entity.name.function.mach"
@@ -383,38 +412,62 @@
                     }
                 },
                 {
-                    "name": "meta.definition.function.mach",
-                    "match": "\\b(?:(?:pub|ext)\\s+)*fun\\s+([A-Za-z_][A-Za-z0-9_]*)\\s*(?:\\[(?:[^\\[\\]]|\\[[^\\[\\]]*\\])*\\])?\\s*\\(",
-                    "captures": {
-                        "1": {
-                            "name": "entity.name.function.mach"
-                        }
-                    }
-                },
-                {
                     "name": "meta.declaration.type.mach",
-                    "match": "\\b(?:(?:pub|ext)\\s+)*(?:rec|uni)\\s+([A-Za-z_][A-Za-z0-9_]*)(?:\\s*\\[(?:[^\\[\\]]|\\[[^\\[\\]]*\\])*\\])?",
+                    "match": "\\b((?:(?:pub|ext)\\s+)*)(rec|uni|tag)\\s+([A-Za-z_][A-Za-z0-9_]*)(?:\\s*(?:\\[(?:[^\\[\\]]|\\[[^\\[\\]]*\\])*\\]))?",
                     "captures": {
                         "1": {
+                            "name": "storage.modifier.mach"
+                        },
+                        "2": {
+                            "name": "keyword.declaration.mach"
+                        },
+                        "3": {
                             "name": "entity.name.type.mach"
                         }
                     }
                 },
                 {
                     "name": "meta.declaration.alias.mach",
-                    "match": "\\b(?:(?:pub|ext)\\s+)*def\\s+([A-Za-z_][A-Za-z0-9_]*)\\b",
+                    "match": "\\b((?:(?:pub|ext)\\s+)*)(def)\\s+([A-Za-z_][A-Za-z0-9_]*)\\b",
                     "captures": {
                         "1": {
+                            "name": "storage.modifier.mach"
+                        },
+                        "2": {
+                            "name": "keyword.declaration.mach"
+                        },
+                        "3": {
                             "name": "entity.name.type.mach"
                         }
                     }
                 },
                 {
                     "name": "meta.declaration.binding.mach",
-                    "match": "\\b(?:(?:pub|ext)\\s+)*(?:val|var)\\s+([A-Za-z_][A-Za-z0-9_]*)\\b",
+                    "match": "\\b((?:(?:pub|ext)\\s+)*)(val|var)\\s+([A-Za-z_][A-Za-z0-9_]*)\\b",
                     "captures": {
                         "1": {
+                            "name": "storage.modifier.mach"
+                        },
+                        "2": {
+                            "name": "keyword.declaration.mach"
+                        },
+                        "3": {
                             "name": "variable.other.definition.mach"
+                        }
+                    }
+                },
+                {
+                    "name": "meta.tag.construct.mach",
+                    "match": "\\b([A-Za-z_][A-Za-z0-9_]*)\\s*(?:\\[(?:[^\\[\\]]|\\[[^\\[\\]]*\\])*\\])?\\s*(\\.)([A-Za-z_][A-Za-z0-9_]*)(?=\\s*\\{)",
+                    "captures": {
+                        "1": {
+                            "name": "support.type.alias.mach"
+                        },
+                        "2": {
+                            "name": "punctuation.accessor.mach"
+                        },
+                        "3": {
+                            "name": "entity.name.tag.case.mach"
                         }
                     }
                 }
@@ -446,7 +499,7 @@
             "patterns": [
                 {
                     "name": "keyword.operator.cast.mach",
-                    "match": "::|:~"
+                    "match": "::|:~|:>"
                 },
                 {
                     "name": "keyword.operator.mach",
