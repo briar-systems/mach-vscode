@@ -4,15 +4,22 @@ on:
   release:
     types: [published]
 
+permissions:
+  contents: read
+
 jobs:
+  ci:
+    uses: ./.github/workflows/ci.yml
+
   publish:
+    needs: [ci]
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
         with:
-          node-version: 20
-      - run: npm ci || npm install
-      - run: npx @vscode/vsce publish
+          node-version: 24
+      - run: npm ci
+      - run: npx --yes @vscode/vsce publish
         env:
           VSCE_PAT: ${{ secrets.VSCE_PAT }}
