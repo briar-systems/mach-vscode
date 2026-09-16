@@ -8,3 +8,4 @@ module.exports = {
     activate,
     deactivate
 };
+function broken( {
