@@ -4,6 +4,10 @@ All notable changes to this extension are documented here. The format follows [K
 
 ## [Unreleased]
 
+### Changed
+
+- Copyright and `author` now name Briar Systems LLC. `package.json` adds `bugs` and `homepage` links to the briar-systems repository.
+
 ## [5.1.1] - 2026-09-16
 
 ### Fixed

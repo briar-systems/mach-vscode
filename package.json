@@ -5,6 +5,7 @@
   "version": "5.1.1",
   "publisher": "octalide",
   "license": "MIT",
+  "author": "Briar Systems LLC",
   "engines": {
     "vscode": "^1.95.0"
   },
@@ -42,5 +43,9 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/briar-systems/mach-vscode"
-  }
+  },
+  "bugs": {
+    "url": "https://github.com/briar-systems/mach-vscode/issues"
+  },
+  "homepage": "https://github.com/briar-systems/mach-vscode#readme"
 }
