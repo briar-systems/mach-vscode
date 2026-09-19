@@ -4,6 +4,12 @@ All notable changes to this extension are documented here. The format follows [K
 
 ## [Unreleased]
 
+## [5.1.2] - 2026-09-19
+
+### Changed
+
+- Copyright and `author` now name Briar Systems LLC. `package.json` adds `bugs` and `homepage` links to the briar-systems repository.
+
 ## [5.1.1] - 2026-09-16
 
 ### Fixed
@@ -11,5 +17,6 @@ All notable changes to this extension are documented here. The format follows [K
 - The packaged license text is corrected to MIT. 5.1.0 shipped the Unlicense text from the original scaffold.
 - `package.json` declares `"license": "MIT"`.
 
-[Unreleased]: https://github.com/briar-systems/mach-vscode/compare/v5.1.1...HEAD
+[Unreleased]: https://github.com/briar-systems/mach-vscode/compare/v5.1.2...HEAD
+[5.1.2]: https://github.com/briar-systems/mach-vscode/compare/v5.1.1...v5.1.2
 [5.1.1]: https://github.com/briar-systems/mach-vscode/compare/v5.1.0...v5.1.1
