@@ -442,6 +442,18 @@
                     }
                 },
                 {
+                    "name": "meta.declaration.test.mach",
+                    "match": "(?<!\\.)\\b(test)\\s+([A-Za-z_][A-Za-z0-9_]*)\\b",
+                    "captures": {
+                        "1": {
+                            "name": "keyword.declaration.mach"
+                        },
+                        "2": {
+                            "name": "entity.name.function.test.mach"
+                        }
+                    }
+                },
+                {
                     "name": "meta.declaration.binding.mach",
                     "match": "\\b((?:(?:pub|ext)\\s+)*)(val|var)\\s+([A-Za-z_][A-Za-z0-9_]*)\\b",
                     "captures": {
