@@ -443,12 +443,15 @@
                 },
                 {
                     "name": "meta.declaration.test.mach",
-                    "match": "(?<!\\.)\\b(test)\\s+([A-Za-z_][A-Za-z0-9_]*)\\b",
+                    "match": "(?<!\\.)\\b((?:(?:pub|ext)\\s+)*)(test)\\s+([A-Za-z_][A-Za-z0-9_]*)\\b",
                     "captures": {
                         "1": {
-                            "name": "keyword.declaration.mach"
+                            "name": "storage.modifier.mach"
                         },
                         "2": {
+                            "name": "keyword.declaration.mach"
+                        },
+                        "3": {
                             "name": "entity.name.function.test.mach"
                         }
                     }
